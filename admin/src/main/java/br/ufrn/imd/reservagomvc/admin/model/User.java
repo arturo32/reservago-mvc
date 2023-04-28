@@ -34,10 +34,12 @@ public class User extends GenericModel<Long> {
         this.type = type;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

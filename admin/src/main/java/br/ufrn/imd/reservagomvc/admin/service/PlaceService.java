@@ -21,14 +21,6 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
         this.placeRepository = placeRepository;
     }
 
-    public List<Place> getAllPlaces() {
-        return placeRepository.findAll();
-    }
-
-    public Place createPlace(Place place) {
-        return placeRepository.save(place);
-    }
-
     @Override
     public PlaceDto converterParaDTO(Place entity) {
         return null;

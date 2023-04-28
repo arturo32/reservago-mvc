@@ -55,10 +55,12 @@ public class Place extends GenericModel<Long> {
         this.hostId = hostId;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

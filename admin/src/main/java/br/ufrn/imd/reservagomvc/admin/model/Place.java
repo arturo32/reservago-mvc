@@ -1,10 +1,11 @@
-package com.reservago.admin.place;
+package br.ufrn.imd.reservagomvc.admin.model;
 
+import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Place {
+public class Place extends GenericModel<Long> {
     @Id
     @SequenceGenerator(
             name = "place_sequence",

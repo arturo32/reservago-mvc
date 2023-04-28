@@ -1,4 +1,4 @@
-package com.reservago.admin;
+package br.ufrn.imd.reservagomvc.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.reservago.admin;
+package br.ufrn.imd.reservagomvc.admin;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

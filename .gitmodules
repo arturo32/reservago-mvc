@@ -1,0 +1,3 @@
+[submodule "reservago-client"]
+	path = reservago-client
+	url = https://github.com/erneani/reservago-client

@@ -50,7 +50,7 @@ public abstract class GenericService<T extends GenericModel<PK>, Dto, PK extends
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public T findById(PK id) {
-		Optional<T> entity = repository().findById(id);
+		Optional<T> entity = repository().findByIdAndActiveIsTrue(id);
 		if (entity.isEmpty()) {
 			throw new EntityNotFoundException(NOT_FOUND(id));
 		}
@@ -88,7 +88,7 @@ public abstract class GenericService<T extends GenericModel<PK>, Dto, PK extends
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void update(PK id) {
-		Optional<T> entity = repository().findById(id);
+		Optional<T> entity = repository().findByIdAndActiveIsTrue(id);
 		if (entity.isEmpty()) {
 			throw new EntityNotFoundException(NOT_FOUND(id));
 		} else {

@@ -14,22 +14,16 @@ import org.springframework.data.repository.query.Param;
 
 @NoRepositoryBean
 public interface GenericRepository<T extends GenericModel<PK>, PK extends Serializable> extends JpaRepository<T, PK> {
-	@Override
-	@Query(value = "select * from #{#entityName} where active = true", nativeQuery = true)
-	List<T> findAll();
 
 	List<T> findAllByActiveIsTrueAndIdIsInOrderByCreationDateDesc(List<PK> ids);
 
 	List<T> findAllByActiveIsTrueAndIdBetweenOrderByCreationDateDesc(PK start, PK end);
 
 	List<T> findAllByActiveIsTrueOrderByCreationDateDesc(Pageable pageable);
-
-	@Override
-	@Query(value = "select * from #{#entityName} where id = ?1 and active = true", nativeQuery = true)
-	Optional<T> findById(PK arg0);
-
-	@Query(value = "select * from #{#entityName} where id = ?1 and active = false", nativeQuery = true)
-	Optional<T> findDeletedById(PK arg0);
+	
+	Optional<T> findByIdAndActiveIsTrue(PK arg0);
+	
+	Optional<T> findByIdAndActiveIsFalse(PK arg0);
 
 	@Override
 	default void delete(T arg0) {

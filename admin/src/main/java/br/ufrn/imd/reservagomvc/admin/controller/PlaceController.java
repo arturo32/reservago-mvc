@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/places")
+@RequestMapping("/place")
 public class PlaceController extends GenericController<Place, PlaceDto, Long> {
 
     private final PlaceService placeService;

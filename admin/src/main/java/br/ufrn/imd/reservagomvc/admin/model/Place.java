@@ -27,12 +27,14 @@ public class Place extends GenericModel<Long> {
     private String location;
     private String description;
     private Integer daysAvailable;
-    private Long hostId;
+    @ManyToOne
+    @JoinColumn(name = "host_id")
+    private User host;
 
     public Place() {
     }
 
-    public Place(Long id, boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
+    public Place(Long id, boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, User host) {
         this.id = id;
         this.available = available;
         //this.isActive = isActive;
@@ -42,10 +44,10 @@ public class Place extends GenericModel<Long> {
         this.location = location;
         this.description = description;
         this.daysAvailable = daysAvailable;
-        this.hostId = hostId;
+        this.host = host;
     }
 
-    public Place(boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
+    public Place(boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, User host) {
         this.available = available;
         //this.isActive = isActive;
         this.stars = stars;
@@ -54,7 +56,7 @@ public class Place extends GenericModel<Long> {
         this.location = location;
         this.description = description;
         this.daysAvailable = daysAvailable;
-        this.hostId = hostId;
+        this.host = host;
     }
 
     @Override
@@ -131,11 +133,11 @@ public class Place extends GenericModel<Long> {
         this.daysAvailable = daysAvailable;
     }
 
-    public Long getHostId() {
-        return hostId;
+    public User getHost() {
+        return host;
     }
 
-    public void setHostId(Long hostId) {
-        this.hostId = hostId;
+    public void setHost(User hostId) {
+        this.host = hostId;
     }
 }

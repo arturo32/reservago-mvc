@@ -15,9 +15,12 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
 
     private final PlaceRepository placeRepository;
 
+    private final UserService userService;
+
     @Autowired
-    public PlaceService(PlaceRepository placeRepository) {
+    public PlaceService(PlaceRepository placeRepository, UserService userService) {
         this.placeRepository = placeRepository;
+        this.userService = userService;
     }
 
 
@@ -37,7 +40,7 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
         place.setLocation(placeDto.location());
         place.setDescription(placeDto.description());
         place.setDaysAvailable(placeDto.daysAvailable());
-        place.setHostId(placeDto.hostId());
+        place.setHost(userService.findById(placeDto.hostId()));
         return place;
     }
 

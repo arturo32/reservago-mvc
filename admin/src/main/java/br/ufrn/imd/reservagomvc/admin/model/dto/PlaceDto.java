@@ -9,6 +9,6 @@ public record PlaceDto(Long id, boolean isAvailable, double stars, double value,
 	public PlaceDto(Place place) {
 		this(place.getId(), place.isAvailable(), place.getStars(), place.getValue(), place.getName(),
 				place.getLocation(), place.getDescription(), place.getDaysAvailable(),
-				place.getHostId());
+				place.getHost().getId());
 	}
 }

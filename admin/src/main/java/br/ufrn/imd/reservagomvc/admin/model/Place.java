@@ -17,7 +17,7 @@ public class Place extends GenericModel<Long> {
             generator = "place_sequence"
     )
     private Long id;
-    private boolean isAvailable;
+    private boolean available;
 
     // TODO: find another name
     // private boolean isActive;
@@ -32,9 +32,9 @@ public class Place extends GenericModel<Long> {
     public Place() {
     }
 
-    public Place(Long id, boolean isAvailable, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
+    public Place(Long id, boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
         this.id = id;
-        this.isAvailable = isAvailable;
+        this.available = available;
         //this.isActive = isActive;
         this.stars = stars;
         this.value = value;
@@ -45,8 +45,8 @@ public class Place extends GenericModel<Long> {
         this.hostId = hostId;
     }
 
-    public Place(boolean isAvailable, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
-        this.isAvailable = isAvailable;
+    public Place(boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
+        this.available = available;
         //this.isActive = isActive;
         this.stars = stars;
         this.value = value;
@@ -68,11 +68,11 @@ public class Place extends GenericModel<Long> {
     }
 
     public boolean isAvailable() {
-        return isAvailable;
+        return available;
     }
 
     public void setAvailable(boolean available) {
-        isAvailable = available;
+        this.available = available;
     }
 
 //    public boolean isActive() {

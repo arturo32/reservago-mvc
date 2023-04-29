@@ -9,7 +9,6 @@ import br.ufrn.imd.reservagomvc.service.PersistenceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserService extends GenericService<User, UserDto, Long> {
@@ -24,12 +23,16 @@ public class UserService extends GenericService<User, UserDto, Long> {
 
     @Override
     public UserDto convertToDto(User entity) {
-        return null;
+        return new UserDto(entity);
     }
 
     @Override
     public User convertToEntity(UserDto userDto) {
-        return null;
+        User user = new User();
+        user.setId(userDto.id());
+        user.setName(userDto.name());
+        user.setType(userDto.type());
+        return user;
     }
 
     @Override
@@ -43,6 +46,6 @@ public class UserService extends GenericService<User, UserDto, Long> {
     }
 
     @Override protected GenericRepository<User, Long> repository() {
-        return null;
+        return this.userRepository;
     }
 }

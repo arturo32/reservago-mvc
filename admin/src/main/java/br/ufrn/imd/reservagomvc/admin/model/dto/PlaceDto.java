@@ -1,5 +1,14 @@
 package br.ufrn.imd.reservagomvc.admin.model.dto;
 
-import br.ufrn.imd.reservagomvc.model.dto.GenericDto;
 
-public class PlaceDto extends GenericDto {}
+import br.ufrn.imd.reservagomvc.admin.model.Place;
+
+public record PlaceDto(Long id, boolean isAvailable, double stars, double value,
+					   String name, String location, String description, Integer daysAvailable,
+					   Long hostId) {
+	public PlaceDto(Place place) {
+		this(place.getId(), place.isAvailable(), place.getStars(), place.getValue(), place.getName(),
+				place.getLocation(), place.getDescription(), place.getDaysAvailable(),
+				place.getHostId());
+	}
+}

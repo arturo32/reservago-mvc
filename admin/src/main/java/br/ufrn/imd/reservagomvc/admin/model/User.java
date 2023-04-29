@@ -4,7 +4,7 @@ import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name="\"user\"")
 public class User extends GenericModel<Long> {
     @Id
     @SequenceGenerator(

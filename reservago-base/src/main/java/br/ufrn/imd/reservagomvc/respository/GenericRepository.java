@@ -15,20 +15,20 @@ import org.springframework.data.repository.query.Param;
 @NoRepositoryBean
 public interface GenericRepository<T extends GenericModel<PK>, PK extends Serializable> extends JpaRepository<T, PK> {
 	@Override
-	@Query(value = "select * from #{#entityName} where ativo = true", nativeQuery = true)
+	@Query(value = "select * from #{#entityName} where active = true", nativeQuery = true)
 	List<T> findAll();
 
-	List<T> findAllByAtivoIsTrueAndIdIsInOrderByDataCriacaoDesc(List<PK> ids);
+	List<T> findAllByActiveIsTrueAndIdIsInOrderByCreationDateDesc(List<PK> ids);
 
-	List<T> findAllByAtivoIsTrueAndIdBetweenOrderByDataCriacaoDesc(PK start, PK end);
+	List<T> findAllByActiveIsTrueAndIdBetweenOrderByCreationDateDesc(PK start, PK end);
 
-	List<T> findAllByAtivoIsTrueOrderByDataCriacaoDesc(Pageable pageable);
+	List<T> findAllByActiveIsTrueOrderByCreationDateDesc(Pageable pageable);
 
 	@Override
-	@Query(value = "select * from #{#entityName} where id = ?1 and ativo = true", nativeQuery = true)
+	@Query(value = "select * from #{#entityName} where id = ?1 and active = true", nativeQuery = true)
 	Optional<T> findById(PK arg0);
 
-	@Query(value = "select * from #{#entityName} where id = ?1 and ativo = false", nativeQuery = true)
+	@Query(value = "select * from #{#entityName} where id = ?1 and active = false", nativeQuery = true)
 	Optional<T> findDeletedById(PK arg0);
 
 	@Override
@@ -48,7 +48,7 @@ public interface GenericRepository<T extends GenericModel<PK>, PK extends Serial
 	@Override
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE #{#entityName} SET ativo=false where id = ?1", nativeQuery = true)
+	@Query(value = "UPDATE #{#entityName} SET active=false where id = ?1", nativeQuery = true)
 	void deleteById(PK arg0);
 
 	@Override

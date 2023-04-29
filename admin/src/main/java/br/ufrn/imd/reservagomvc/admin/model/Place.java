@@ -18,7 +18,9 @@ public class Place extends GenericModel<Long> {
     )
     private Long id;
     private boolean isAvailable;
-    private boolean isActive;
+
+    // TODO: find another name
+    // private boolean isActive;
     private double stars;
     private double value;
     private String name;
@@ -33,7 +35,7 @@ public class Place extends GenericModel<Long> {
     public Place(Long id, boolean isAvailable, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
         this.id = id;
         this.isAvailable = isAvailable;
-        this.isActive = isActive;
+        //this.isActive = isActive;
         this.stars = stars;
         this.value = value;
         this.name = name;
@@ -45,7 +47,7 @@ public class Place extends GenericModel<Long> {
 
     public Place(boolean isAvailable, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, Long hostId) {
         this.isAvailable = isAvailable;
-        this.isActive = isActive;
+        //this.isActive = isActive;
         this.stars = stars;
         this.value = value;
         this.name = name;
@@ -73,13 +75,13 @@ public class Place extends GenericModel<Long> {
         isAvailable = available;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
+//    public boolean isActive() {
+//        return isActive;
+//    }
+//
+//    public void setActive(boolean active) {
+//        isActive = active;
+//    }
 
     public double getStars() {
         return stars;

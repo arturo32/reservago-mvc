@@ -21,24 +21,28 @@ public class UserService extends GenericService<User, UserDto, Long> {
         this.userRepository = userRepository;
     }
 
-    @Override public UserDto converterParaDTO(User entity) {
-        return null;
-    }
 
-    @Override public User converterParaEntidade(UserDto userDto) {
+    @Override
+    public UserDto convertToDto(User entity) {
         return null;
     }
 
     @Override
-    protected void validarModoPersistencia(PersistenceType tipoPersistencia, UserDto userDto) {
+    public User convertToEntity(UserDto userDto) {
+        return null;
+    }
+
+    @Override
+    protected void validatePersistenceType(PersistenceType persistenceType, UserDto userDto) {
 
     }
 
-    @Override protected void validar(UserDto userDto) {
+    @Override
+    protected void validate(UserDto userDto) {
 
     }
 
-    @Override protected GenericRepository<User, Long> repositorio() {
+    @Override protected GenericRepository<User, Long> repository() {
         return null;
     }
 }

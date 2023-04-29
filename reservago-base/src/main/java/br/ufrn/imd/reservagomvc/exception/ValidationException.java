@@ -1,14 +1,14 @@
 package br.ufrn.imd.reservagomvc.exception;
 
-public class ValidacaoException extends NegocioException {
+public class ValidationException extends BusinessException {
 
 	private static final long serialVersionUID = 4708225233399249765L;
 
-	public ValidacaoException() {
+	public ValidationException() {
 
 	}
 
-	public ValidacaoException(String message) {
+	public ValidationException(String message) {
 		super(message);
 	}
 

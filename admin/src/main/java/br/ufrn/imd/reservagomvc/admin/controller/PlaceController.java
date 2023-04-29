@@ -22,7 +22,7 @@ public class PlaceController extends GenericController<Place, PlaceDto, Long> {
     }
 
     @Override
-    protected GenericService<Place, PlaceDto, Long> servico() {
+    protected GenericService<Place, PlaceDto, Long> service() {
         return this.placeService;
     }
 }

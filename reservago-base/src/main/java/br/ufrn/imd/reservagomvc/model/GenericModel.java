@@ -17,82 +17,82 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 @MappedSuperclass
 public abstract class GenericModel<PK extends Serializable> {
-	@Column(name = "data_criacao", nullable = false, updatable = false)
+	@Column(name = "creation_date", nullable = false, updatable = false)
 	@CreatedDate
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonIgnore
-	private LocalDateTime dataCriacao = LocalDateTime.now();
+	private LocalDateTime creationDate = LocalDateTime.now();
 
-	@Column(name = "data_modificacao")
+	@Column(name = "modification_date")
 	@LastModifiedDate
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonIgnore
-	private LocalDateTime dataModificacao;
+	private LocalDateTime modificationDate;
 
-	@Column(name = "data_exclusao")
+	@Column(name = "exlusion_date")
 	@LastModifiedDate
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonIgnore
-	private LocalDateTime dataExclusao;
+	private LocalDateTime exclusionDate;
 
 	@NotNull
-	private Boolean ativo = true;
+	private Boolean active = true;
 
 	public abstract PK getId();
 
 	public abstract void setId(PK id);
 
 	@JsonIgnore
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public LocalDateTime getCreationDate() {
+		return creationDate;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	@JsonIgnore
-	public LocalDateTime getDataModificacao() {
-		return dataModificacao;
-	}
-
-	public void setDataModificacao(LocalDateTime dataModificacao) {
-		this.dataModificacao = dataModificacao;
+	public void setCreationDate(LocalDateTime dataCriacao) {
+		this.creationDate = dataCriacao;
 	}
 
 	@JsonIgnore
-	public LocalDateTime getDataExclusao() {
-		return dataExclusao;
+	public LocalDateTime getModificationDate() {
+		return modificationDate;
 	}
 
-	public void setDataExclusao(LocalDateTime dataExclusao) {
-		this.dataExclusao = dataExclusao;
+	public void setModificationDate(LocalDateTime dataModificacao) {
+		this.modificationDate = dataModificacao;
+	}
+
+	@JsonIgnore
+	public LocalDateTime getExclusionDate() {
+		return exclusionDate;
+	}
+
+	public void setExclusionDate(LocalDateTime dataExclusao) {
+		this.exclusionDate = dataExclusao;
 	}
 
 	@PreUpdate
 	public void preUpdate() {
-		this.dataModificacao = LocalDateTime.now();
+		this.modificationDate = LocalDateTime.now();
 	}
 
 	@PreRemove
 	public void preRemove() {
-		this.dataExclusao = LocalDateTime.now();
+		this.exclusionDate = LocalDateTime.now();
 	}
 
 	@JsonIgnore
-	public Boolean getAtivo() {
-		return ativo;
+	public Boolean getActive() {
+		return active;
 	}
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setActive(Boolean ativo) {
+		this.active = ativo;
 	}
 
 	@JsonIgnore
-	public Boolean isAtivo() {
-		return ativo;
+	public Boolean isActive() {
+		return active;
 	}
 }

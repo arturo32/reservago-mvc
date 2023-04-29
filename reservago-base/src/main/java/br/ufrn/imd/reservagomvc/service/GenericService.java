@@ -1,6 +1,6 @@
 package br.ufrn.imd.reservagomvc.service;
 
-import br.ufrn.imd.reservagomvc.exception.EntidadeNaoEncontradaException;
+import br.ufrn.imd.reservagomvc.exception.EntityNotFoundException;
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import java.io.Serializable;
@@ -18,78 +18,81 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class GenericService<T extends GenericModel<PK>, Dto, PK extends Serializable> {
 
-	protected String nomeModelo;
+	protected String modelName;
+
+	private String NOT_FOUND(PK id) {
+		return "Entity of type '" + this.getModelName()
+				+ "' and ID '" + id + "' not found.";
+	}
 
 	public GenericService() {
-		this.nomeModelo = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName();
-		this.nomeModelo = this.nomeModelo.substring(this.nomeModelo.lastIndexOf(".") + 1);
+		this.modelName = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName();
+		this.modelName = this.modelName.substring(this.modelName.lastIndexOf(".") + 1);
 	}
 
-	public String obterNomeModelo() {
-		return this.nomeModelo;
+	public String getModelName() {
+		return this.modelName;
 	}
 
-	public abstract Dto converterParaDTO(T entity);
+	public abstract Dto convertToDto(T entity);
 
-	public abstract T converterParaEntidade(Dto dto);
+	public abstract T convertToEntity(Dto dto);
 
-	protected abstract void validarModoPersistencia(PersistenceType tipoPersistencia, Dto dto);
+	protected abstract void validatePersistenceType(PersistenceType persistenceType, Dto dto);
 
-	protected abstract void validar(Dto dto);
+	protected abstract void validate(Dto dto);
 
-	public Collection<Dto> converterParaListaDTO(Collection<T> entidades) {
-		return entidades.stream().map(this::converterParaDTO).collect(Collectors.toList());
+	public Collection<Dto> convertToDtoList(Collection<T> entities) {
+		return entities.stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
-	protected abstract GenericRepository<T, PK> repositorio();
+	protected abstract GenericRepository<T, PK> repository();
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public T buscarPorId(PK id) {
-		Optional<T> entidade = repositorio().findById(id);
-		if (entidade.isEmpty()) {
-			throw new EntidadeNaoEncontradaException("Entidade do tipo '" + this.obterNomeModelo()
-					+ "' de id: '" + id + "' não encontrada");
+	public T findById(PK id) {
+		Optional<T> entity = repository().findById(id);
+		if (entity.isEmpty()) {
+			throw new EntityNotFoundException(NOT_FOUND(id));
 		}
-		return entidade.get();
+		return entity.get();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public List<T> buscarTodos(Integer lim, Integer pg) {
-		return repositorio().findAllByAtivoIsTrueOrderByDataCriacaoDesc(PageRequest.of(pg, lim));
+	public List<T> findAll(Integer limit, Integer page) {
+		return repository().findAllByActiveIsTrueOrderByCreationDateDesc(PageRequest.of(page, limit));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public List<T> buscarPorIds(List<PK> ids) {
-		return repositorio().findAllByAtivoIsTrueAndIdIsInOrderByDataCriacaoDesc(ids);
+	public List<T> findByIds(List<PK> ids) {
+		return repository().findAllByActiveIsTrueAndIdIsInOrderByCreationDateDesc(ids);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public List<T> buscarPorIntervalo(PK startId, PK endId) {
-		return repositorio().findAllByAtivoIsTrueAndIdBetweenOrderByDataCriacaoDesc(startId, endId);
+	public List<T> findByInterval(PK startId, PK endId) {
+		return repository().findAllByActiveIsTrueAndIdBetweenOrderByCreationDateDesc(startId, endId);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public T salvar(Dto dto) {
-		this.validarModoPersistencia(PersistenceType.ADICIONAR, dto);
-		this.validar(dto);
-		return repositorio().save(converterParaEntidade(dto));
+	public T save(Dto dto) {
+		this.validatePersistenceType(PersistenceType.ADD, dto);
+		this.validate(dto);
+		return repository().save(convertToEntity(dto));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public T atualizar(Dto dto) {
-		this.validarModoPersistencia(PersistenceType.ATUALIZAR, dto);
-		this.validar(dto);
-		return repositorio().save(converterParaEntidade(dto));
+	public T update(Dto dto) {
+		this.validatePersistenceType(PersistenceType.UPDATE, dto);
+		this.validate(dto);
+		return repository().save(convertToEntity(dto));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void remover(PK id) {
-		Optional<T> entidade = repositorio().findById(id);
-		if (entidade.isEmpty()) {
-			throw new EntidadeNaoEncontradaException("Entidade do tipo '" + this.obterNomeModelo()
-					+ "' de id: '" + id + "' não encontrada");
+	public void update(PK id) {
+		Optional<T> entity = repository().findById(id);
+		if (entity.isEmpty()) {
+			throw new EntityNotFoundException(NOT_FOUND(id));
 		} else {
-			repositorio().deleteById(id);
+			repository().deleteById(id);
 		}
 	}
 }

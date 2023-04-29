@@ -21,28 +21,29 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
         this.placeRepository = placeRepository;
     }
 
+
     @Override
-    public PlaceDto converterParaDTO(Place entity) {
+    public PlaceDto convertToDto(Place entity) {
         return null;
     }
 
     @Override
-    public Place converterParaEntidade(PlaceDto placeDto) {
+    public Place convertToEntity(PlaceDto placeDto) {
         return null;
     }
 
     @Override
-    protected void validarModoPersistencia(PersistenceType tipoPersistencia, PlaceDto placeDto) {
+    protected void validatePersistenceType(PersistenceType persistenceType, PlaceDto placeDto) {
 
     }
 
     @Override
-    protected void validar(PlaceDto placeDto) {
+    protected void validate(PlaceDto placeDto) {
 
     }
 
     @Override
-    protected GenericRepository<Place, Long> repositorio() {
+    protected GenericRepository<Place, Long> repository() {
         return null;
     }
 }

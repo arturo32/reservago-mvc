@@ -22,7 +22,7 @@ public class UserController extends GenericController<User, UserDto, Long> {
     }
 
     @Override
-    protected GenericService<User, UserDto, Long> servico() {
+    protected GenericService<User, UserDto, Long> service() {
         return this.userService;
     }
 }

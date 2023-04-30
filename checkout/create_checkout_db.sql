@@ -1,0 +1,2 @@
+CREATE DATABASE checkout;
+GRANT ALL PRIVILEGES ON DATABASE checkout TO postgres;

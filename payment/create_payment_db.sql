@@ -1,0 +1,2 @@
+CREATE DATABASE payment;
+GRANT ALL PRIVILEGES ON DATABASE payment TO postgres;

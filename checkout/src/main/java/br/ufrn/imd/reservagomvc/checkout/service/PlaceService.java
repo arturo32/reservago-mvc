@@ -1,17 +1,19 @@
 package br.ufrn.imd.reservagomvc.checkout.service;
 
-import br.ufrn.imd.reservagomvc.checkout.model.Place;
+import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PlaceDto;
 import br.ufrn.imd.reservagomvc.checkout.repository.PlaceRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
 import br.ufrn.imd.reservagomvc.service.PersistenceType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public class PlaceService extends GenericService<Place, PlaceDto, Long> {
+public class PlaceService extends GenericService<Checkout, PlaceDto, Long> {
 
     private final PlaceRepository placeRepository;
 
@@ -25,23 +27,23 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
 
 
     @Override
-    public PlaceDto convertToDto(Place entity) {
+    public PlaceDto convertToDto(Checkout entity) {
         return new PlaceDto(entity);
     }
 
     @Override
-    public Place convertToEntity(PlaceDto placeDto) {
-        Place place = new Place();
-        place.setId(placeDto.id());
-        place.setAvailable(placeDto.isAvailable());
-        place.setStars(placeDto.stars());
-        place.setValue(placeDto.value());
-        place.setName(placeDto.name());
-        place.setLocation(placeDto.location());
-        place.setDescription(placeDto.description());
-        place.setDaysAvailable(placeDto.daysAvailable());
-        place.setHost(userService.findById(placeDto.hostId()));
-        return place;
+    public Checkout convertToEntity(PlaceDto placeDto) {
+        Checkout checkout = new Checkout();
+        checkout.setId(placeDto.id());
+        checkout.setAvailable(placeDto.isAvailable());
+        checkout.setStars(placeDto.stars());
+        checkout.setValue(placeDto.value());
+        checkout.setName(placeDto.name());
+        checkout.setLocation(placeDto.location());
+        checkout.setDescription(placeDto.description());
+        checkout.setDaysAvailable(placeDto.daysAvailable());
+        checkout.setHost(userService.findById(placeDto.hostId()));
+        return checkout;
     }
 
     @Override
@@ -55,7 +57,15 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
     }
 
     @Override
-    protected GenericRepository<Place, Long> repository() {
+    protected GenericRepository<Checkout, Long> repository() {
         return this.placeRepository;
     }
+
+	public void checkAvailability(Long id) {
+        String BASE_URL = "http://localhost:8100/admin/place/";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<PlaceDto> response = restTemplate.getForEntity(BASE_URL + id, PlaceDto.class);
+        System.out.println(response.getBody().name());
+        System.out.println(response.getBody().isAvailable());
+	}
 }

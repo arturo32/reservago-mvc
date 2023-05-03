@@ -23,18 +23,18 @@ public class Transaction extends GenericModel<Long> {
 			generator = "transaction_sequence"
 	)
 	private Long id;
-	private Boolean isTransactionOk;
+	private boolean transactionOk;
 
 	public Transaction() {
 	}
 
-	public Transaction(Long id, Boolean isTransactionOk) {
+	public Transaction(Long id, boolean isTransactionOk) {
 		this.id = id;
-		this.isTransactionOk = isTransactionOk;
+		this.transactionOk = isTransactionOk;
 	}
 
-	public Transaction(Boolean isTransactionOk) {
-		this.isTransactionOk = isTransactionOk;
+	public Transaction(boolean isTransactionOk) {
+		this.transactionOk = isTransactionOk;
 	}
 
 	@Override public Long getId() {
@@ -45,11 +45,11 @@ public class Transaction extends GenericModel<Long> {
 		this.id = id;
 	}
 
-	public Boolean getTransactionOk() {
-		return isTransactionOk;
+	public boolean isTransactionOk() {
+		return transactionOk;
 	}
 
-	public void setTransactionOk(Boolean transactionOk) {
-		isTransactionOk = transactionOk;
+	public void setTransactionOk(boolean transactionOk) {
+		this.transactionOk = transactionOk;
 	}
 }

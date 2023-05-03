@@ -11,8 +11,8 @@
 	<groupId>br.ufrn.imd.reservagomvc</groupId>
 	<artifactId>admin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>admin</name>
-	<description>ReservaGO resources storage and administration</description>
+	<name>checkout</name>
+	<description>Handles checkout requests and validations</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>

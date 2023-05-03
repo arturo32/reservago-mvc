@@ -35,7 +35,7 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
         place.setId(placeDto.id());
         place.setAvailable(placeDto.isAvailable());
         place.setStars(placeDto.stars());
-        place.setValue(placeDto.value());
+        place.setValuePerDay(placeDto.value());
         place.setName(placeDto.name());
         place.setLocation(placeDto.location());
         place.setDescription(placeDto.description());

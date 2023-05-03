@@ -2,6 +2,8 @@ package br.ufrn.imd.reservagomvc.admin.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -19,10 +21,8 @@ public class Place extends GenericModel<Long> {
     private Long id;
     private boolean available;
 
-    // TODO: find another name
-    // private boolean isActive;
     private double stars;
-    private double value;
+    private double valuePerDay;
     private String name;
     private String location;
     private String description;
@@ -31,32 +31,12 @@ public class Place extends GenericModel<Long> {
     @JoinColumn(name = "host_id")
     private User host;
 
+    @OneToMany
+    private List<User> guests = new ArrayList<>();
+
+    private Integer maxNumberOfGuests;
+
     public Place() {
-    }
-
-    public Place(Long id, boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, User host) {
-        this.id = id;
-        this.available = available;
-        //this.isActive = isActive;
-        this.stars = stars;
-        this.value = value;
-        this.name = name;
-        this.location = location;
-        this.description = description;
-        this.daysAvailable = daysAvailable;
-        this.host = host;
-    }
-
-    public Place(boolean available, boolean isActive, double stars, double value, String name, String location, String description, Integer daysAvailable, User host) {
-        this.available = available;
-        //this.isActive = isActive;
-        this.stars = stars;
-        this.value = value;
-        this.name = name;
-        this.location = location;
-        this.description = description;
-        this.daysAvailable = daysAvailable;
-        this.host = host;
     }
 
     @Override
@@ -77,14 +57,6 @@ public class Place extends GenericModel<Long> {
         this.available = available;
     }
 
-//    public boolean isActive() {
-//        return isActive;
-//    }
-//
-//    public void setActive(boolean active) {
-//        isActive = active;
-//    }
-
     public double getStars() {
         return stars;
     }
@@ -93,12 +65,12 @@ public class Place extends GenericModel<Long> {
         this.stars = stars;
     }
 
-    public double getValue() {
-        return value;
+    public double getValuePerDay() {
+        return valuePerDay;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setValuePerDay(double value) {
+        this.valuePerDay = value;
     }
 
     public String getName() {
@@ -139,5 +111,25 @@ public class Place extends GenericModel<Long> {
 
     public void setHost(User hostId) {
         this.host = hostId;
+    }
+
+    public List<User> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(List<User> guests) {
+        this.guests = guests;
+    }
+
+    public Integer getMaxNumberOfGuests() {
+        return maxNumberOfGuests;
+    }
+
+    public void setMaxNumberOfGuests(Integer maxNumberOfGuests) {
+        this.maxNumberOfGuests = maxNumberOfGuests;
+    }
+
+    public boolean isFull(){
+        return this.getGuests().size() == maxNumberOfGuests;
     }
 }

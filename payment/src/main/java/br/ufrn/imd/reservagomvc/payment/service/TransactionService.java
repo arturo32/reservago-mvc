@@ -46,4 +46,14 @@ public class TransactionService extends GenericService<Transaction, TransactionD
     @Override protected GenericRepository<Transaction, Long> repository() {
         return this.transactionRepository;
     }
+
+    public Boolean validatePayment(TransactionDto transactionDto) throws InterruptedException {
+        Thread.sleep(1000);
+
+        if (transactionDto.isTransactionOk()) {
+            return true;
+        }
+
+        return false;
+    }
 }

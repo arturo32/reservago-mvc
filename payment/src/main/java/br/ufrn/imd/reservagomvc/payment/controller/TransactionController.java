@@ -19,6 +19,11 @@ public class TransactionController extends GenericController<Transaction, Transa
         this.transactionService = transactionService;
     }
 
+    @PostMapping()
+    public Boolean validatePayment(TransactionDto transactionDto) throws InterruptedException {
+        return transactionService.validatePayment(transactionDto);
+    }
+
     @Override
     protected GenericService<Transaction, TransactionDto, Long> service() {
         return this.transactionService;

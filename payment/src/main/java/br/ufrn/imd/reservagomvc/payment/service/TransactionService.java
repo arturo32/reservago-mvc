@@ -1,12 +1,14 @@
 package br.ufrn.imd.reservagomvc.payment.service;
 
 import br.ufrn.imd.reservagomvc.payment.model.Transaction;
+import br.ufrn.imd.reservagomvc.payment.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.payment.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.payment.repository.TransactionRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
 import br.ufrn.imd.reservagomvc.service.PersistenceType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -28,9 +30,14 @@ public class TransactionService extends GenericService<Transaction, TransactionD
 
     @Override
     public Transaction convertToEntity(TransactionDto transactionDto) {
-        Transaction user = new Transaction();
-        user.setId(transactionDto.id());
-        return user;
+        Transaction transaction = new Transaction();
+
+        transaction.setId(transactionDto.id());
+        transaction.setTransactionOk(transactionDto.transactionOk());
+        transaction.setPlaceId(transactionDto.placeId());
+        transaction.setUserId(transactionDto.userId());
+
+        return transaction;
     }
 
     @Override
@@ -47,13 +54,11 @@ public class TransactionService extends GenericService<Transaction, TransactionD
         return this.transactionRepository;
     }
 
-    public Boolean validatePayment(TransactionDto transactionDto) throws InterruptedException {
-        Thread.sleep(1000);
-
-        if (transactionDto.isTransactionOk()) {
-            return true;
-        }
-
-        return false;
+    public ResponseEntity<Transaction> validatePayment(PaymentDto paymentDto) {
+        // Do some validation logic
+        Transaction transaction = new Transaction();
+        transaction.setUserId(paymentDto.creditCard().getOwnerId());
+        // Payment will be used, I swear
+        return ResponseEntity.ok()
     }
 }

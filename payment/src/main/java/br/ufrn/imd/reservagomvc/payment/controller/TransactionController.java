@@ -1,6 +1,7 @@
 package br.ufrn.imd.reservagomvc.payment.controller;
 
 import br.ufrn.imd.reservagomvc.payment.model.Transaction;
+import br.ufrn.imd.reservagomvc.payment.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.payment.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.payment.service.TransactionService;
 import br.ufrn.imd.reservagomvc.controller.GenericController;
@@ -20,11 +21,10 @@ public class TransactionController extends GenericController<Transaction, Transa
         this.transactionService = transactionService;
     }
 
-//    @Override
-//    @PostMapping
-//    public ResponseEntity<Dto> TransactionDto save(TransactionDto transactionDto) throws InterruptedException {
-//        return transactionService.validatePayment(transactionDto);
-//    }
+    @PostMapping("/pay")
+    public ResponseEntity<Transaction> makePayment(PaymentDto paymentDto) {
+        return transactionService.validatePayment(paymentDto);
+    }
 
     @Override
     protected GenericService<Transaction, TransactionDto, Long> service() {

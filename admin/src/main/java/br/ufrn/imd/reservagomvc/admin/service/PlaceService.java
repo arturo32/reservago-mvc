@@ -33,14 +33,16 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
     public Place convertToEntity(PlaceDto placeDto) {
         Place place = new Place();
         place.setId(placeDto.id());
-        place.setAvailable(placeDto.isAvailable());
+        place.setAvailable(placeDto.available());
         place.setStars(placeDto.stars());
-        place.setValuePerDay(placeDto.value());
+        place.setValuePerDay(placeDto.valuePerDay());
         place.setName(placeDto.name());
         place.setLocation(placeDto.location());
         place.setDescription(placeDto.description());
         place.setDaysAvailable(placeDto.daysAvailable());
         place.setHost(userService.findById(placeDto.hostId()));
+        place.setGuests(placeDto.guests());
+        place.setMaxNumberOfGuests(placeDto.maxNumberOfGuests());
         return place;
     }
 

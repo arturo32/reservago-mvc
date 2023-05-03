@@ -1,7 +1,8 @@
-package br.ufrn.imd.reservagomvc.admin.model;
+package br.ufrn.imd.reservagomvc.checkout.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +20,14 @@ public class Place extends GenericModel<Long> {
             generator = "place_sequence"
     )
     private Long id;
-
     private boolean available;
+
     private double stars;
     private double valuePerDay;
     private String name;
     private String location;
     private String description;
     private Integer daysAvailable;
-
     @ManyToOne
     @JoinColumn(name = "host_id")
     private User host;

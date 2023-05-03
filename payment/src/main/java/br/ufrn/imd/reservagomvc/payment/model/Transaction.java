@@ -24,24 +24,32 @@ public class Transaction extends GenericModel<Long> {
 	)
 	private Long id;
 	private boolean transactionOk;
+	private Long placeId;
+	private Long userId;
 
 	public Transaction() {
 	}
 
-	public Transaction(Long id, boolean isTransactionOk) {
+	public Transaction(Long id, boolean transactionOk, Long placeId, Long userId) {
 		this.id = id;
-		this.transactionOk = isTransactionOk;
+		this.transactionOk = transactionOk;
+		this.placeId = placeId;
+		this.userId = userId;
 	}
 
-	public Transaction(boolean isTransactionOk) {
-		this.transactionOk = isTransactionOk;
+	public Transaction(boolean transactionOk, Long placeId, Long userId) {
+		this.transactionOk = transactionOk;
+		this.placeId = placeId;
+		this.userId = userId;
 	}
 
-	@Override public Long getId() {
-		return this.id;
+	@Override
+	public Long getId() {
+		return id;
 	}
 
-	@Override public void setId(Long id) {
+	@Override
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -51,5 +59,21 @@ public class Transaction extends GenericModel<Long> {
 
 	public void setTransactionOk(boolean transactionOk) {
 		this.transactionOk = transactionOk;
+	}
+
+	public Long getPlaceId() {
+		return placeId;
+	}
+
+	public void setPlaceId(Long placeId) {
+		this.placeId = placeId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

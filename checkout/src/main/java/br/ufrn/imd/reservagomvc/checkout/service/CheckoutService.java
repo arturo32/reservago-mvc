@@ -1,8 +1,8 @@
 package br.ufrn.imd.reservagomvc.checkout.service;
 
 import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
-import br.ufrn.imd.reservagomvc.checkout.model.Place;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
+import br.ufrn.imd.reservagomvc.checkout.model.dto.PlaceDto;
 import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
@@ -55,8 +55,8 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         String ADMIN_URL = "http://localhost:8100/admin/place/";
         RestTemplate rst = new RestTemplate();
 
-        ResponseEntity<Place> response = rst.getForEntity(ADMIN_URL + id, Place.class);
+        ResponseEntity<PlaceDto> response = rst.getForEntity(ADMIN_URL + id, PlaceDto.class);
 
-        return response.getBody().isAvailable();
+        return response.getBody().available();
     }
 }

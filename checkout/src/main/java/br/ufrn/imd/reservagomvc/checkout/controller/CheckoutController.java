@@ -30,7 +30,7 @@ public class CheckoutController extends GenericController<Checkout, CheckoutDto,
         return ResponseEntity.ok(checkoutService.checkAvailability(id));
     }
 
-    @PostMapping({"/performPayment/{id}"})
-    public ResponseEntity<>
+//    @PostMapping({"/performPayment/{id}"})
+//    public ResponseEntity<>
 
 }

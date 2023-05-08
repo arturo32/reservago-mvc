@@ -2,26 +2,26 @@ package br.ufrn.imd.reservagomvc.payment.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
-import org.hibernate.validator.cfg.defs.CreditCardNumberDef;
 
 import java.util.Date;
 
 @Entity
-@Table
 public class Payment extends GenericModel<Long> {
 
     @Id
     @SequenceGenerator(
-            name = "transaction_sequence",
-            sequenceName = "transaction_sequence",
+            name = "payment_sequence",
+            sequenceName = "payment_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "transaction_sequence"
+            generator = "payment_sequence"
     )
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "credit_card_id")
     private CreditCard creditCard;
     private Date paymentDate;
 

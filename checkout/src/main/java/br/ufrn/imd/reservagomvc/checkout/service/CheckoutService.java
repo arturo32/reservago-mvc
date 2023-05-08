@@ -7,6 +7,7 @@ import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
 import br.ufrn.imd.reservagomvc.service.PersistenceType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long> {
 
     private final CheckoutRepository checkoutRepository;
+
+    @Value("${admin.server.name}")
+    private String ADMIN_SERVER_URL;
 
     public CheckoutService(CheckoutRepository checkoutRepository) {
         this.checkoutRepository = checkoutRepository;
@@ -52,11 +56,14 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
     }
 
     public boolean checkAvailability(Long id) {
-        String ADMIN_URL = "http://localhost:8100/admin/place/";
+        String getPlaceUri = "http://" + ADMIN_SERVER_URL + "/admin/place/" + id;
         RestTemplate rst = new RestTemplate();
 
-        ResponseEntity<PlaceDto> response = rst.getForEntity(ADMIN_URL + id, PlaceDto.class);
+        ResponseEntity<PlaceDto> response = rst.getForEntity(getPlaceUri, PlaceDto.class);
 
-        return response.getBody().available();
+        PlaceDto place = response.getBody();
+
+        assert place != null;
+        return place.available();
     }
 }

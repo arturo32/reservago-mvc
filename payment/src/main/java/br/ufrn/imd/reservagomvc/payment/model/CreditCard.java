@@ -1,22 +1,24 @@
 package br.ufrn.imd.reservagomvc.payment.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 
+@Entity
 public class CreditCard extends GenericModel<Long> {
 
     @Id
     @SequenceGenerator(
-            name = "transaction_sequence",
-            sequenceName = "transaction_sequence",
+            name = "credit_card_sequence",
+            sequenceName = "credit_card_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "transaction_sequence"
+            generator = "credit_card_sequence"
     )
     private Long id;
 
@@ -42,6 +44,10 @@ public class CreditCard extends GenericModel<Long> {
         this.number = number;
         this.balance = balance;
         this.verificationNumber = verificationNumber;
+    }
+
+    public CreditCard() {
+
     }
 
     @Override

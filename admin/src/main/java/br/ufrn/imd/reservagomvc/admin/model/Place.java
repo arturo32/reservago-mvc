@@ -130,7 +130,7 @@ public class Place extends GenericModel<Long> {
         this.maxNumberOfGuests = maxNumberOfGuests;
     }
 
-    public boolean isFull(){
+    public boolean isFull() {
         return this.getGuests().size() == maxNumberOfGuests;
     }
 }

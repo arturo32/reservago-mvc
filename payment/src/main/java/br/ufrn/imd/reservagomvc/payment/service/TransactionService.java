@@ -54,11 +54,12 @@ public class TransactionService extends GenericService<Transaction, TransactionD
         return this.transactionRepository;
     }
 
-    public ResponseEntity<Transaction> validatePayment(PaymentDto paymentDto) {
+    public ResponseEntity<Transaction> performPayment(PaymentDto paymentDto) {
         // Do some validation logic
         Transaction transaction = new Transaction();
         transaction.setUserId(paymentDto.creditCard().getOwnerId());
+        transaction.setTransactionOk(true);
         // Payment will be used, I swear
-        return ResponseEntity.ok()
+        return ResponseEntity.ok(transaction);
     }
 }

@@ -1,7 +1,9 @@
 package br.ufrn.imd.reservagomvc.checkout.controller;
 
 import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
+import br.ufrn.imd.reservagomvc.checkout.model.Transaction;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
+import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.checkout.service.CheckoutService;
 import br.ufrn.imd.reservagomvc.controller.GenericController;
 import br.ufrn.imd.reservagomvc.service.GenericService;
@@ -30,7 +32,8 @@ public class CheckoutController extends GenericController<Checkout, CheckoutDto,
         return ResponseEntity.ok(checkoutService.checkAvailability(id));
     }
 
-//    @PostMapping({"/performPayment/{id}"})
-//    public ResponseEntity<>
-
+    @PostMapping({"/book/{id}"})
+    public ResponseEntity<Transaction> bookLocation(@RequestParam Long placeId, @RequestBody PaymentDto paymentDto) {
+        return checkoutService.bookLocation(placeId, paymentDto);
+    }
 }

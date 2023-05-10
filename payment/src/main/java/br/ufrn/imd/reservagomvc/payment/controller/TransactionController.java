@@ -22,8 +22,8 @@ public class TransactionController extends GenericController<Transaction, Transa
     }
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> makePayment(PaymentDto paymentDto) {
-        return transactionService.validatePayment(paymentDto);
+    public ResponseEntity<Transaction> performPayment(PaymentDto paymentDto) {
+        return transactionService.performPayment(paymentDto);
     }
 
     @Override

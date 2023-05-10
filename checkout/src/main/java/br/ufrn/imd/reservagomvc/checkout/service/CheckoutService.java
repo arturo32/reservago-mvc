@@ -1,6 +1,7 @@
 package br.ufrn.imd.reservagomvc.checkout.service;
 
 import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
+import br.ufrn.imd.reservagomvc.checkout.model.Payment;
 import br.ufrn.imd.reservagomvc.checkout.model.Transaction;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
@@ -73,7 +74,7 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
     }
 
     public ResponseEntity<Transaction> bookLocation(Long placeId, PaymentDto paymentDto) {
-        String performPaymentUri = "http://" + PAYMENT_SERVER_URL + "/payment/pay";
+        String performPaymentUri = "http://" + PAYMENT_SERVER_URL + "/payment/transaction/pay";
         RestTemplate rst = new RestTemplate();
 
         boolean isPlaceAvailable = this.checkAvailability(placeId);
@@ -84,7 +85,7 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         }
 
         ResponseEntity<Transaction> response = rst.postForEntity(performPaymentUri, paymentDto, Transaction.class);
-        System.out.println("PAYMENT RESULT IS " + response.getBody());
+        response.getBody().setPlaceId(placeId);
         return response;
     }
 }

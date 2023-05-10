@@ -32,8 +32,8 @@ public class CheckoutController extends GenericController<Checkout, CheckoutDto,
         return ResponseEntity.ok(checkoutService.checkAvailability(id));
     }
 
-    @PostMapping({"/book/{id}"})
-    public ResponseEntity<Transaction> bookLocation(@RequestParam Long placeId, @RequestBody PaymentDto paymentDto) {
+    @PostMapping({"/book/{placeId}"})
+    public ResponseEntity<Transaction> bookLocation(@PathVariable Long placeId, @RequestBody PaymentDto paymentDto) {
         return checkoutService.bookLocation(placeId, paymentDto);
     }
 }

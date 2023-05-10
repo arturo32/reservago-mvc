@@ -22,7 +22,7 @@ public class TransactionController extends GenericController<Transaction, Transa
     }
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> performPayment(PaymentDto paymentDto) {
+    public ResponseEntity<Transaction> performPayment(@RequestBody PaymentDto paymentDto) {
         return transactionService.performPayment(paymentDto);
     }
 

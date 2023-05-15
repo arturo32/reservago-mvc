@@ -10,6 +10,7 @@ import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
 import br.ufrn.imd.reservagomvc.service.PersistenceType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -78,13 +79,13 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         boolean isPlaceAvailable = this.checkAvailability(placeId);
 
         if (!isPlaceAvailable) {
-            TransactionDto
-                    failedTransaction = new TransactionDto(null, false, placeId,
-                    paymentDto.creditCard().ownerId());
-            return ResponseEntity.ok(failedTransaction);
+            TransactionDto failedTransaction = new TransactionDto(null, false,
+                    placeId, paymentDto.creditCard().ownerId());
+            return ResponseEntity.status(409).body(failedTransaction);
         }
 
-        ResponseEntity<TransactionDto> response = rst.postForEntity(performPaymentUri, paymentDto, TransactionDto.class);
+        ResponseEntity<TransactionDto> response = rst.postForEntity(performPaymentUri, paymentDto,
+                TransactionDto.class);
         return response;
     }
 }

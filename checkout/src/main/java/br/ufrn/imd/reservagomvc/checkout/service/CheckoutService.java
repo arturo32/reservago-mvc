@@ -1,11 +1,10 @@
 package br.ufrn.imd.reservagomvc.checkout.service;
 
 import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
-import br.ufrn.imd.reservagomvc.checkout.model.Payment;
-import br.ufrn.imd.reservagomvc.checkout.model.Transaction;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PlaceDto;
+import br.ufrn.imd.reservagomvc.checkout.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
@@ -69,23 +68,23 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
 
         PlaceDto place = response.getBody();
 
-        assert place != null;
         return place.available();
     }
 
-    public ResponseEntity<Transaction> bookLocation(Long placeId, PaymentDto paymentDto) {
+    public ResponseEntity<TransactionDto> bookLocation(Long placeId, PaymentDto paymentDto) {
         String performPaymentUri = "http://" + PAYMENT_SERVER_URL + "/payment/transaction/pay";
         RestTemplate rst = new RestTemplate();
 
         boolean isPlaceAvailable = this.checkAvailability(placeId);
 
         if (!isPlaceAvailable) {
-            Transaction failedTransaction = new Transaction(false, placeId, paymentDto.creditCard().getOwnerId());
+            TransactionDto
+                    failedTransaction = new TransactionDto(null, false, placeId,
+                    paymentDto.creditCard().ownerId());
             return ResponseEntity.ok(failedTransaction);
         }
 
-        ResponseEntity<Transaction> response = rst.postForEntity(performPaymentUri, paymentDto, Transaction.class);
-        response.getBody().setPlaceId(placeId);
+        ResponseEntity<TransactionDto> response = rst.postForEntity(performPaymentUri, paymentDto, TransactionDto.class);
         return response;
     }
 }

@@ -2,37 +2,28 @@ package br.ufrn.imd.reservagomvc.checkout.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
 public class Checkout extends GenericModel<Long> {
     @Id
     @SequenceGenerator(
-            name = "place_sequence",
-            sequenceName = "place_sequence",
+            name = "checkout_sequence",
+            sequenceName = "checkout_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "place_sequence"
+            generator = "checkout_sequence"
     )
     private Long id;
-    private Integer amountOfDays;
-    private Long transactionId;
+    private Date expirationDate;
 
-    public Checkout() {
-    }
+    private Long userId;
 
-    public Checkout(Long id, Integer amountOfDays, Long transactionId) {
-        this.id = id;
-        this.amountOfDays = amountOfDays;
-        this.transactionId = transactionId;
-    }
+    private Long placeId;
 
-    public Checkout(Integer amountOfDays, Long transactionId) {
-        this.amountOfDays = amountOfDays;
-        this.transactionId = transactionId;
-    }
 
     @Override
     public Long getId() {
@@ -44,19 +35,27 @@ public class Checkout extends GenericModel<Long> {
         this.id = id;
     }
 
-    public Integer getAmountOfDays() {
-        return amountOfDays;
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setAmountOfDays(Integer amountOfDays) {
-        this.amountOfDays = amountOfDays;
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public Long getTransactionId() {
-        return transactionId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(Long placeId) {
+        this.placeId = placeId;
     }
 }

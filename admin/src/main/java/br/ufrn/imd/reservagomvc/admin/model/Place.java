@@ -31,10 +31,6 @@ public class Place extends GenericModel<Long> {
     @ManyToOne
     @JoinColumn(name = "host_id")
     private User host;
-
-    @OneToMany
-    private List<User> guests = new ArrayList<>();
-
     private Integer maxNumberOfGuests;
 
     public Place() {
@@ -114,23 +110,11 @@ public class Place extends GenericModel<Long> {
         this.host = hostId;
     }
 
-    public List<User> getGuests() {
-        return guests;
-    }
-
-    public void setGuests(List<User> guests) {
-        this.guests = guests;
-    }
-
     public Integer getMaxNumberOfGuests() {
         return maxNumberOfGuests;
     }
 
     public void setMaxNumberOfGuests(Integer maxNumberOfGuests) {
         this.maxNumberOfGuests = maxNumberOfGuests;
-    }
-
-    public boolean isFull() {
-        return this.getGuests().size() == maxNumberOfGuests;
     }
 }

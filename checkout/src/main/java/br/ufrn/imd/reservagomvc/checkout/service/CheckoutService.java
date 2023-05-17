@@ -9,6 +9,8 @@ import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
 import br.ufrn.imd.reservagomvc.respository.GenericRepository;
 import br.ufrn.imd.reservagomvc.service.GenericService;
 import br.ufrn.imd.reservagomvc.service.PersistenceType;
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +42,9 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         Checkout checkout = new Checkout();
 
         checkout.setId(checkoutDto.id());
-        checkout.setAmountOfDays(checkoutDto.amountOfDays());
-        checkout.setTransactionId(checkoutDto.transactionId());
+        checkout.setExpirationDate(checkoutDto.expirationDate());
+        checkout.setUserId(checkoutDto.userId());
+        checkout.setPlaceId(checkoutDto.placeId());
 
         return checkout;
     }
@@ -61,15 +64,22 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         return this.checkoutRepository;
     }
 
-    public boolean checkAvailability(Long id) {
-        String getPlaceUri = "http://" + ADMIN_SERVER_URL + "/admin/place/" + id;
+    public boolean checkAvailability(Long placeId) {
+        String getPlaceUri = "http://" + ADMIN_SERVER_URL + "/admin/place/" + placeId;
         RestTemplate rst = new RestTemplate();
 
         ResponseEntity<PlaceDto> response = rst.getForEntity(getPlaceUri, PlaceDto.class);
 
         PlaceDto place = response.getBody();
 
-        return place.available();
+        Integer maxNumberOfGuests = place.maxNumberOfGuests();
+
+        Integer currentGuests = this.checkoutRepository
+                .countAllByPlaceIdAndActiveIsTrueAndCreationDateGreaterThan(placeId, LocalDateTime.now());
+
+
+        // TODO: send custom DTO with the number of current guests
+        return !currentGuests.equals(maxNumberOfGuests);
     }
 
     public ResponseEntity<TransactionDto> bookLocation(Long placeId, PaymentDto paymentDto) {

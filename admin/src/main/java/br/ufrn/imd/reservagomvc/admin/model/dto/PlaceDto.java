@@ -8,10 +8,10 @@ import java.util.List;
 
 public record PlaceDto(Long id, boolean available, double stars, double valuePerDay,
 					   String name, String location, String description, Integer daysAvailable,
-					   Long hostId, List<User> guests, Integer maxNumberOfGuests) {
+					   Long hostId) {
 	public PlaceDto(Place place) {
 		this(place.getId(), place.isAvailable(), place.getStars(), place.getValuePerDay(), place.getName(),
 				place.getLocation(), place.getDescription(), place.getDaysAvailable(),
-				place.getHost().getId(), place.getGuests(), place.getMaxNumberOfGuests());
+				place.getHost().getId());
 	}
 }

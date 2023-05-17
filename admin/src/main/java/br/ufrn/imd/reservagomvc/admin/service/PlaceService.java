@@ -41,6 +41,7 @@ public class PlaceService extends GenericService<Place, PlaceDto, Long> {
         place.setDescription(placeDto.description());
         place.setDaysAvailable(placeDto.daysAvailable());
         place.setHost(userService.findById(placeDto.hostId()));
+        place.setMaxNumberOfGuests(placeDto.maxNumberOfGuests());
         return place;
     }
 

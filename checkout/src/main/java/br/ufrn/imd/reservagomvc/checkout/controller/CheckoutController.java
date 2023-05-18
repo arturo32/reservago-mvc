@@ -1,19 +1,17 @@
 package br.ufrn.imd.reservagomvc.checkout.controller;
 
-import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.checkout.service.CheckoutService;
-import br.ufrn.imd.reservagomvc.controller.GenericController;
-import br.ufrn.imd.reservagomvc.service.GenericService;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/checkout")
-public class CheckoutController extends GenericController<Checkout, CheckoutDto, Long> {
+public class CheckoutController {
 
     private final CheckoutService checkoutService;
 
@@ -22,18 +20,14 @@ public class CheckoutController extends GenericController<Checkout, CheckoutDto,
         this.checkoutService = checkoutService;
     }
 
-    @Override
-    protected GenericService<Checkout, CheckoutDto, Long> service() {
-        return this.checkoutService;
-    }
-
     @GetMapping({"/verify/{id}"})
-    public ResponseEntity<Boolean> checkAvailability(@PathVariable Long id) {
+    public ResponseEntity<CheckoutDto> checkAvailability(@PathVariable Long id) {
         return ResponseEntity.ok(checkoutService.checkAvailability(id));
     }
 
     @PostMapping({"/book/{placeId}"})
-    public ResponseEntity<TransactionDto> bookLocation(@PathVariable Long placeId, @RequestBody PaymentDto paymentDto) {
-        return checkoutService.bookLocation(placeId, paymentDto);
+    public ResponseEntity<TransactionDto> bookLocation(@PathVariable Long placeId,
+            @RequestBody PaymentDto paymentDto, @RequestBody Date expirationDate) {
+        return checkoutService.bookLocation(placeId, paymentDto, expirationDate);
     }
 }

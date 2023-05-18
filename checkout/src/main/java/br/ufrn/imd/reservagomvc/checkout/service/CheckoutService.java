@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long> {
+public class CheckoutService {
 
     private final CheckoutRepository checkoutRepository;
 
@@ -32,39 +32,7 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         this.checkoutRepository = checkoutRepository;
     }
 
-    @Override
-    public CheckoutDto convertToDto(Checkout entity) {
-        return new CheckoutDto(entity);
-    }
-
-    @Override
-    public Checkout convertToEntity(CheckoutDto checkoutDto) {
-        Checkout checkout = new Checkout();
-
-        checkout.setId(checkoutDto.id());
-        checkout.setExpirationDate(checkoutDto.expirationDate());
-        checkout.setUserId(checkoutDto.userId());
-        checkout.setPlaceId(checkoutDto.placeId());
-
-        return checkout;
-    }
-
-    @Override
-    protected void validatePersistenceType(PersistenceType persistenceType, CheckoutDto checkoutDto) {
-
-    }
-
-    @Override
-    protected void validate(CheckoutDto checkoutDto) {
-
-    }
-
-    @Override
-    protected GenericRepository<Checkout, Long> repository() {
-        return this.checkoutRepository;
-    }
-
-    public boolean checkAvailability(Long placeId) {
+    public CheckoutDto checkAvailability(Long placeId) {
         String getPlaceUri = "http://" + ADMIN_SERVER_URL + "/admin/place/" + placeId;
         RestTemplate rst = new RestTemplate();
 
@@ -77,16 +45,15 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
         Integer currentGuests = this.checkoutRepository
                 .countAllByPlaceIdAndActiveIsTrueAndCreationDateGreaterThan(placeId, LocalDateTime.now());
 
-
-        // TODO: send custom DTO with the number of current guests
-        return !currentGuests.equals(maxNumberOfGuests);
+        return new CheckoutDto(maxNumberOfGuests, currentGuests);
     }
 
-    public ResponseEntity<TransactionDto> bookLocation(Long placeId, PaymentDto paymentDto) {
+    public ResponseEntity<TransactionDto> bookLocation(Long placeId, PaymentDto paymentDto,
+            Date expirationDate) {
         String performPaymentUri = "http://" + PAYMENT_SERVER_URL + "/payment/transaction/pay";
         RestTemplate rst = new RestTemplate();
 
-        boolean isPlaceAvailable = this.checkAvailability(placeId);
+        boolean isPlaceAvailable = !this.checkAvailability(placeId).isFull();
 
         if (!isPlaceAvailable) {
             TransactionDto failedTransaction = new TransactionDto(null, false,
@@ -94,8 +61,12 @@ public class CheckoutService extends GenericService<Checkout, CheckoutDto, Long>
             return ResponseEntity.status(409).body(failedTransaction);
         }
 
-        ResponseEntity<TransactionDto> response = rst.postForEntity(performPaymentUri, paymentDto,
-                TransactionDto.class);
-        return response;
+        Checkout checkout = new Checkout();
+        checkout.setPlaceId(placeId);
+        checkout.setUserId(paymentDto.creditCard().ownerId());
+        checkout.setExpirationDate(expirationDate);
+        this.checkoutRepository.save(checkout);
+
+        return rst.postForEntity(performPaymentUri, paymentDto, TransactionDto.class);
     }
 }

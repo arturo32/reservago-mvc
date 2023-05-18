@@ -8,6 +8,7 @@ import br.ufrn.imd.reservagomvc.checkout.model.dto.PlaceDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
 import java.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class CheckoutService {
     @Value("${payment.server.name}")
     private String PAYMENT_SERVER_URL;
 
+    @Autowired
     public CheckoutService(CheckoutRepository checkoutRepository) {
         this.checkoutRepository = checkoutRepository;
     }

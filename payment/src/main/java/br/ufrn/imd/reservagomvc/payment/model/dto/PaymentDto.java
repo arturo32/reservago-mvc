@@ -5,9 +5,9 @@ import br.ufrn.imd.reservagomvc.payment.model.Payment;
 
 import java.util.Date;
 
-public record PaymentDto(Long id, CreditCardDto creditCard, Date paymentDate) {
+public record PaymentDto(Long id, CreditCardDto creditCard) {
     public PaymentDto(Payment payment) {
-        this(payment.getId(), new CreditCardDto(payment.getCreditCard()), payment.getPaymentDate());
+        this(payment.getId(), new CreditCardDto(payment.getCreditCard()));
     }
 
 }

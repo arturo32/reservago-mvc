@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CheckoutRepository extends GenericRepository<Checkout, Long> {
 
-	Integer countAllByPlaceIdAndActiveIsTrueAndCreationDateGreaterThan(Long placeId, LocalDateTime currentDate);
+	Integer countAllByPlaceIdAndActiveIsTrueAndCheckoutDateGreaterThan(Long placeId, LocalDateTime currentDate);
 }

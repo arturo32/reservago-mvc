@@ -1,11 +1,13 @@
 package br.ufrn.imd.reservagomvc.checkout.controller;
 
+import br.ufrn.imd.reservagomvc.checkout.model.dto.BookDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.checkout.service.CheckoutService;
-import java.util.Date;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,7 @@ public class CheckoutController {
 
     @PostMapping({"/book/{placeId}"})
     public ResponseEntity<TransactionDto> bookLocation(@PathVariable Long placeId,
-            @RequestBody PaymentDto paymentDto, @RequestBody Date expirationDate) {
-        return checkoutService.bookLocation(placeId, paymentDto, expirationDate);
+            @RequestBody BookDto bookDto) {
+        return checkoutService.bookLocation(placeId, bookDto);
     }
 }

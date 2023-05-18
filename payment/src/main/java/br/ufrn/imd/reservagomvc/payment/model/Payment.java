@@ -23,20 +23,8 @@ public class Payment extends GenericModel<Long> {
     @ManyToOne
     @JoinColumn(name = "credit_card_id")
     private CreditCard creditCard;
-    private Date paymentDate;
 
     public Payment() {
-    }
-
-    public Payment(Long id, CreditCard creditCard, Date paymentDate) {
-        this.id = id;
-        this.creditCard = creditCard;
-        this.paymentDate = paymentDate;
-    }
-
-    public Payment(CreditCard creditCard, Date paymentDate) {
-        this.creditCard = creditCard;
-        this.paymentDate = paymentDate;
     }
 
     @Override
@@ -55,13 +43,5 @@ public class Payment extends GenericModel<Long> {
 
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
     }
 }

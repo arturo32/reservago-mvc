@@ -2,7 +2,7 @@ package br.ufrn.imd.reservagomvc.checkout.model;
 
 import br.ufrn.imd.reservagomvc.model.GenericModel;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -18,7 +18,7 @@ public class Checkout extends GenericModel<Long> {
             generator = "checkout_sequence"
     )
     private Long id;
-    private Date expirationDate;
+    private LocalDateTime checkoutDate;
 
     private Long userId;
 
@@ -35,12 +35,12 @@ public class Checkout extends GenericModel<Long> {
         this.id = id;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public LocalDateTime getCheckoutDate() {
+        return checkoutDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setCheckoutDate(LocalDateTime expirationDate) {
+        this.checkoutDate = expirationDate;
     }
 
     public Long getUserId() {

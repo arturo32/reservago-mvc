@@ -95,4 +95,10 @@ public abstract class GenericService<T extends GenericModel<PK>, Dto, PK extends
 			repository().deleteById(id);
 		}
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteAll() {
+		repository().deleteAll();
+	}
+
 }

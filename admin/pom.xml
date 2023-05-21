@@ -33,7 +33,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>br.ufrn.imd.reservagomvc</groupId>
+			<groupId>br.ufrn.imd.reservagomvc.base</groupId>
 			<artifactId>reservago-base</artifactId>
 			<version>1.0</version>
 		</dependency>

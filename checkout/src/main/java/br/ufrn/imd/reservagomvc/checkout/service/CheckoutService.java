@@ -66,4 +66,8 @@ public class CheckoutService {
 
         return rst.postForEntity(performPaymentUri, bookDto.paymentDto(), TransactionDto.class);
     }
+
+    public void deleteAll() {
+        this.checkoutRepository.deleteAll();
+    }
 }

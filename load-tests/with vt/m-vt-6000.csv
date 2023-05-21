@@ -1,0 +1,4 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+Verificar Localidade por ID,6000,37,6,278,28.91,0.000%,302.81619,69.79,59.14,236.0
+Realizar aluguel de Localidade,6000,56,14,322,33.95,0.000%,302.77035,106.64,126.84,360.7
+TOTAL,12000,47,6,322,32.86,0.000%,605.11321,176.29,185.85,298.3

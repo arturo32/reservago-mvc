@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>br.ufrn.imd.reservagowebflux.base</groupId>
+	<groupId>br.ufrn.imd.reservagomvc.base</groupId>
 	<artifactId>reservago-base</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>

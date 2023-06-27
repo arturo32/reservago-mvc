@@ -1,3 +1,6 @@
 [submodule "reservago-client"]
 	path = reservago-client
 	url = https://github.com/erneani/reservago-client
+[submodule "reservago-config-repo"]
+	path = reservago-config-repo
+	url = git@github.com:erneani/reservago-config-repo.git

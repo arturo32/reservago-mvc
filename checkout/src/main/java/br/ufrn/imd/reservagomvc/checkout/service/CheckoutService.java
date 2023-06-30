@@ -3,7 +3,6 @@ package br.ufrn.imd.reservagomvc.checkout.service;
 import br.ufrn.imd.reservagomvc.checkout.model.Checkout;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.BookDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.CheckoutDto;
-import br.ufrn.imd.reservagomvc.checkout.model.dto.PaymentDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.PlaceDto;
 import br.ufrn.imd.reservagomvc.checkout.model.dto.TransactionDto;
 import br.ufrn.imd.reservagomvc.checkout.repository.CheckoutRepository;
@@ -18,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 public class CheckoutService {
 
     private final CheckoutRepository checkoutRepository;
-
     @Value("${admin.server.name}")
     private String ADMIN_SERVER_URL;
 
@@ -30,11 +28,13 @@ public class CheckoutService {
         this.checkoutRepository = checkoutRepository;
     }
 
+    @Autowired
+    private RestTemplate rstTemplate;
+
     public CheckoutDto checkAvailability(Long placeId) {
         String getPlaceUri = "http://" + ADMIN_SERVER_URL + "/admin/place/" + placeId;
-        RestTemplate rst = new RestTemplate();
 
-        ResponseEntity<PlaceDto> response = rst.getForEntity(getPlaceUri, PlaceDto.class);
+        ResponseEntity<PlaceDto> response = this.rstTemplate.getForEntity(getPlaceUri, PlaceDto.class);
 
         PlaceDto place = response.getBody();
 
@@ -48,7 +48,6 @@ public class CheckoutService {
 
     public ResponseEntity<TransactionDto> bookLocation(Long placeId, BookDto bookDto) {
         String performPaymentUri = "http://" + PAYMENT_SERVER_URL + "/payment/transaction/pay";
-        RestTemplate rst = new RestTemplate();
 
         boolean isPlaceAvailable = !this.checkAvailability(placeId).isFull();
 
@@ -64,7 +63,7 @@ public class CheckoutService {
         checkout.setCheckoutDate(bookDto.checkoutDate());
         this.checkoutRepository.save(checkout);
 
-        return rst.postForEntity(performPaymentUri, bookDto.paymentDto(), TransactionDto.class);
+        return this.rstTemplate.postForEntity(performPaymentUri, bookDto.paymentDto(), TransactionDto.class);
     }
 
     public void deleteAll() {
